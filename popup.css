@@ -2,17 +2,47 @@
 
 body
 {
+    width: 318px;
+    font-size: 0;
+    font-family: Meiryo,"Hiragino Kaku Gothic Pro W3",Arial,"Helvetica Neue",sans-serif;
     margin: 0;
+    padding: 5px;
 }
 
-h1
+h1,h2
 {
+    font-size: 14px;
     padding: 0;
     margin: 0;
 }
 
-.sankaku-button
+h2
 {
-    height: 50px;
-    width: 100px;
+    height: 17px;
+}
+
+a
+{
+    display: block;
+    font-size: 12px;
+    color: #FF761C;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover
+{
+    color: #666;
+}
+
+.source-preview
+{
+    display: inline-block;
+    vertical-align: middle;
+    margin: 3px;
+}
+
+.source-preview img
+{
+    max-width: 100px;
 }
