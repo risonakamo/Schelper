@@ -1,4 +1,5 @@
 window.onload=main;
+var _imageUrls; //sorted array of result image urls
 
 function main()
 {
@@ -29,14 +30,10 @@ function main()
         });
     });
 
-    // document.querySelector(".sankaku-button").addEventListener("click",(e)=>{
-    //     e.preventDefault();
-
-    //     for (var x=0,l=_sankakuImages.length;x<l;x++)
-    //     {
-    //         chrome.tabs.create({url:_sankakuImages[x],active:false});
-    //     }
-    // });
+    document.querySelector(".open-source-all").addEventListener("click",(e)=>{
+        e.preventDefault();
+        openAllSource();
+    });
 
     document.querySelector(".fit-window-all").addEventListener("click",(e)=>{
         e.preventDefault();
@@ -51,6 +48,8 @@ function handleTabs(inputResults,tabLength,sourceSelect)
     {
         return;
     }
+
+    _imageUrls=inputResults;
 
     inputResults.sort((a,b)=>{
         return a.index-b.index;
@@ -68,6 +67,15 @@ function fitWindowAll(tabs)
     for (var x=0,l=tabs.length;x<l;x++)
     {
         chrome.tabs.executeScript(tabs[x].id,{file:"fitwindowall-pre.js",runAt:"document_end"});
+    }
+}
+
+//open all source image urls in new tabs
+function openAllSource()
+{
+    for (var x=0,l=_imageUrls.length;x<l;x++)
+    {
+        chrome.tabs.create({url:_imageUrls[x].image,active:false});
     }
 }
 
