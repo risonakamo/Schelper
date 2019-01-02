@@ -14,13 +14,16 @@ function main()
             sourceSelect.classList.add("low-image-count");
         }
 
-        for (var x=0,l=tabs.length;x<l;x++)
-        {
-            chrome.tabs.executeScript(tabs[x].id,{file:"openoriginal.js",runAt:"document_end"},(res)=>{
-                console.log(res[0]);
-                sourceSelect.appendChild(genSourcePreview(res[0]));
+        //execute script on all sankaku tabs, collect results in handleTabs()
+        //they need to be processed async as they come in an incorrect order
+        //and we care about order.
+        var resultImages=[];
+        tabs.forEach((x)=>{
+            chrome.tabs.executeScript(x.id,{file:"openoriginal.js",runAt:"document_end"},(res)=>{
+                resultImages.push({image:res[0],index:x.index});
+                handleTabs(resultImages,tabs.length,sourceSelect);
             });
-        }
+        });
     });
 
     // document.querySelector(".sankaku-button").addEventListener("click",(e)=>{
@@ -31,6 +34,24 @@ function main()
     //         chrome.tabs.create({url:_sankakuImages[x],active:false});
     //     }
     // });
+}
+
+//async handling of tab script results, so they can be sorted in the correct order
+function handleTabs(inputResults,tabLength,sourceSelect)
+{
+    if (inputResults.length!=tabLength)
+    {
+        return;
+    }
+
+    inputResults.sort((a,b)=>{
+        return a.index-b.index;
+    });
+
+    for (var x=0,l=inputResults.length;x<l;x++)
+    {
+        sourceSelect.appendChild(genSourcePreview(inputResults[x].image));
+    }
 }
 
 //give it the full sankaku source link to generate a preview element
