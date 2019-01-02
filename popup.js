@@ -34,6 +34,11 @@ function main()
     //         chrome.tabs.create({url:_sankakuImages[x],active:false});
     //     }
     // });
+
+    document.querySelector(".fit-window-all").addEventListener("click",(e)=>{
+        e.preventDefault();
+        fitWindowAll();
+    });
 }
 
 //async handling of tab script results, so they can be sorted in the correct order
@@ -52,6 +57,21 @@ function handleTabs(inputResults,tabLength,sourceSelect)
     {
         sourceSelect.appendChild(genSourcePreview(inputResults[x].image));
     }
+}
+
+//requery all tabs and call resize_image on all sankaku image pages
+function fitWindowAll()
+{
+    //requery all tabs just in case
+    chrome.tabs.query({
+        currentWindow:true,
+        url:"*://chan.sankakucomplex.com/post/show/*"
+    },(tabs)=>{
+        for (var x=0,l=tabs.length;x<l;x++)
+        {
+            chrome.tabs.executeScript(tabs[x].id,{file:"fitwindowall-pre.js",runAt:"document_end"});
+        }
+    });
 }
 
 //give it the full sankaku source link to generate a preview element

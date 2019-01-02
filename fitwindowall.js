@@ -1,0 +1,1 @@
+Post.resize_image();

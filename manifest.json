@@ -7,6 +7,10 @@
 
     "permissions":["tabs","*://chan.sankakucomplex.com/post/*"],
 
+    "web_accessible_resources":[
+        "fitwindowall.js"
+    ],
+
     "browser_action":{
         "default_popup":"popup.html"
     }
