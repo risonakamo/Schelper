@@ -39,6 +39,16 @@ function main()
         e.preventDefault();
         fitWindowAll(tabs);
     });
+
+    document.querySelector(".close-posts-all").addEventListener("click",(e)=>{
+        e.preventDefault();
+        closeAllPosts();
+    });
+
+    document.querySelector(".close-source-all").addEventListener("click",(e)=>{
+        e.preventDefault();
+        closeAllPosts(1);
+    });
 }
 
 //async handling of tab script results, so they can be sorted in the correct order
@@ -77,6 +87,28 @@ function openAllSource()
     {
         chrome.tabs.create({url:_imageUrls[x].image,active:false});
     }
+}
+
+//close all sankaku image post pages.
+//if original set true, close all image source pages instead.
+function closeAllPosts(original)
+{
+    var url="*://chan.sankakucomplex.com/post/show/*";
+
+    if (original)
+    {
+        url="https://cs.sankakucomplex.com/data/*";
+    }
+
+    chrome.tabs.query({
+        currentWindow:true,
+        url:url
+    },(tabs)=>{
+        for (var x=0,l=tabs.length;x<l;x++)
+        {
+            chrome.tabs.remove(tabs[x].id);
+        }
+    });
 }
 
 //give it the full sankaku source link to generate a preview element

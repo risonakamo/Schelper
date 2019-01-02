@@ -43,7 +43,7 @@ p
 .source-select
 {
     width: 335px;
-    height: 295px;
+    max-height: 295px;
     overflow: auto;
 }
 
