@@ -37,7 +37,23 @@ a:hover
 
 p
 {
-    font-size: 10px;
+    font-size: 23px;
+    color: #666;
+    text-align: center;
+    margin: 0;
+    font-weight: bold;
+    line-height: 120px;
+}
+
+.inactive
+{
+    display: none;
+}
+
+.sankaku-inactive
+{
+    width: 318px;
+    height: 120px;
 }
 
 .source-select

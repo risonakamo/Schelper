@@ -12,6 +12,14 @@ function main()
         url:"*://chan.sankakucomplex.com/post/show/*"
     },(tabss)=>{
         tabs=tabss;
+
+        if (tabs.length==0)
+        {
+            document.querySelector(".sankaku-active").classList.add("inactive");
+            document.querySelector(".sankaku-inactive").classList.remove("inactive");
+            return;
+        }
+
         //modified width for no scrollbar
         if (tabs.length<=6)
         {
