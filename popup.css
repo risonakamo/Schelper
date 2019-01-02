@@ -2,17 +2,15 @@
 
 body
 {
-    width: 318px;
     font-size: 0;
     font-family: Meiryo,"Hiragino Kaku Gothic Pro W3",Arial,"Helvetica Neue",sans-serif;
     margin: 0;
-    padding: 5px;
 }
 
 h1,h2
 {
     font-size: 14px;
-    padding: 0;
+    padding: 3px 0 0 5px;
     margin: 0;
 }
 
@@ -28,11 +26,24 @@ a
     color: #FF761C;
     text-decoration: none;
     font-weight: bold;
+    padding-left: 5px;
 }
 
 a:hover
 {
     color: #666;
+}
+
+.source-select
+{
+    width: 335px;
+    height: 295px;
+    overflow: auto;
+}
+
+.source-select.low-image-count
+{
+    width: 318px;
 }
 
 .source-preview
