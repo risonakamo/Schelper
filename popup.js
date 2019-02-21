@@ -59,6 +59,7 @@ function main()
     });
 
     dropZoneActions();
+    setupOpenFolderAll();
 }
 
 //async handling of tab script results, so they can be sorted in the correct order
@@ -179,7 +180,7 @@ function dropZoneActions()
     });
 }
 
-//open all files in a folder tab
+//open all files in a folder tab in new tabs
 function openAllFolderTab()
 {
     chrome.tabs.executeScript({file:"openallinfoldertab.js"},(res)=>{
@@ -194,5 +195,24 @@ function openAllFolderTab()
                 chrome.tabs.executeScript(tab.id,{file:"dragopenactions.js"});
             });
         }
+    });
+}
+
+//set up popup ui elements for open folder all functions
+//check if the page is a file page and show controls if it is
+function setupOpenFolderAll()
+{
+    chrome.tabs.query({active:true,currentWindow:true},(tab)=>{
+        tab=tab[0];
+        if (tab.url.slice(0,4)!="file")
+        {
+            return;
+        }
+
+        document.querySelector(".open-folder-all-section").classList.remove("inactive");
+        document.querySelector(".open-folder-all").addEventListener("click",(e)=>{
+            e.preventDefault();
+            openAllFolderTab();
+        });
     });
 }
