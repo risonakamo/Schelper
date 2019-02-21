@@ -187,6 +187,8 @@ function dropZoneActions()
             chrome.tabs.create({
                 url:`file:///${dragOpenPath}/${files[x]}`,
                 active:false
+            },(tab)=>{
+                chrome.tabs.executeScript(tab.id,{file:"dragopenactions.js"});
             });
         }
     });
