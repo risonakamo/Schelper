@@ -57,6 +57,8 @@ function main()
         e.preventDefault();
         closeAllPosts(1);
     });
+
+    dropZoneActions();
 }
 
 //async handling of tab script results, so they can be sorted in the correct order
@@ -125,4 +127,67 @@ function genSourcePreview(sourceLink)
     var a=document.createElement("div");
     a.innerHTML=`<div class="source-preview"><img src="https://cs.sankakucomplex.com/data/preview/${sourceLink.split("data/")[1].replace(/\..*/,".jpg")}"></div>`;
     return a.firstChild;
+}
+
+var dragOpenPath;
+
+//set the dragOpen. input must be a String.raw
+function setDragOpenPath(path)
+{
+    dragOpenPath=path.replace(/\\/g,"/");
+    console.log(dragOpenPath);
+}
+
+//setup drop zone actions/events
+function dropZoneActions()
+{
+    var body=document.body;
+
+    body.addEventListener("dragover",(e)=>{
+        e.preventDefault();
+    });
+
+    body.addEventListener("drop",(e)=>{
+        e.preventDefault();
+
+        if (!dragOpenPath)
+        {
+            return;
+        }
+
+        var dataFiles=e.dataTransfer.files;
+        var files=[];
+
+        for (var x=0,l=dataFiles.length;x<l;x++)
+        {
+            files.push(dataFiles[x].name);
+        }
+
+        var numReg=/\d+/;
+
+        files.sort((a,b)=>{
+            var a=parseInt(a.match(numReg)[0]);
+            var b=parseInt(b.match(numReg)[0]);
+
+            if (a>b)
+            {
+                return 1;
+            }
+
+            else if (a<b)
+            {
+                return -1;
+            }
+
+            return 0;
+        });
+
+        for (var x=0,l=files.length;x<l;x++)
+        {
+            chrome.tabs.create({
+                url:`file:///${dragOpenPath}/${files[x]}`,
+                active:false
+            });
+        }
+    });
 }
