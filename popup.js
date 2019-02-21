@@ -163,29 +163,32 @@ function dropZoneActions()
             files.push(dataFiles[x].name);
         }
 
-        var numReg=/\d+/;
-
         files.sort((a,b)=>{
-            var a=parseInt(a.match(numReg)[0]);
-            var b=parseInt(b.match(numReg)[0]);
-
-            if (a>b)
-            {
-                return 1;
-            }
-
-            else if (a<b)
-            {
-                return -1;
-            }
-
-            return 0;
+            return a.name.localeCompare(b.name,undefined,{numeric:true});
         });
 
         for (var x=0,l=files.length;x<l;x++)
         {
             chrome.tabs.create({
                 url:`file:///${dragOpenPath}/${files[x]}`,
+                active:false
+            },(tab)=>{
+                chrome.tabs.executeScript(tab.id,{file:"dragopenactions.js"});
+            });
+        }
+    });
+}
+
+//open all files in a folder tab
+function openAllFolderTab()
+{
+    chrome.tabs.executeScript({file:"openallinfoldertab.js"},(res)=>{
+        res=res[0];
+
+        for (var x=0,l=res.length;x<l;x++)
+        {
+            chrome.tabs.create({
+                url:res[x].path,
                 active:false
             },(tab)=>{
                 chrome.tabs.executeScript(tab.id,{file:"dragopenactions.js"});
