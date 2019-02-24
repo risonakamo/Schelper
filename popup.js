@@ -60,6 +60,7 @@ function main()
 
     dropZoneActions();
     setupOpenFolderAll();
+    checkSourceTabs();
 }
 
 //async handling of tab script results, so they can be sorted in the correct order
@@ -192,7 +193,7 @@ function openAllFolderTab()
                 url:res[x].path,
                 active:false
             },(tab)=>{
-                chrome.tabs.executeScript(tab.id,{file:"dragopenactions.js"});
+                chrome.tabs.executeScript(tab.id,{file:"looppause.js"});
             });
         }
     });
@@ -215,4 +216,37 @@ function setupOpenFolderAll()
             openAllFolderTab();
         });
     });
+}
+
+var _sourceTabs;
+
+//check if there are any source tabs, and reveal the source tab actions
+//section if there are any
+function checkSourceTabs()
+{
+    chrome.tabs.query({
+        currentWindow:true,
+        url:"https://cs.sankakucomplex.com/data/*"
+    },(tabs)=>{
+        _sourceTabs=tabs;
+
+        if (_sourceTabs.length)
+        {
+            document.querySelector(".source-actions").classList.remove("inactive");
+            document.querySelector(".loop-pause").addEventListener("click",(e)=>{
+                e.preventDefault();
+                loopPauseSourcePages();
+            });
+        }
+    });
+}
+
+//target all source pages and if there is a video element,
+//pause/loop it, like what is done when openfolderall is used
+function loopPauseSourcePages()
+{
+    for (var x=0,l=_sourceTabs.length;x<l;x++)
+    {
+        chrome.tabs.executeScript(_sourceTabs[x].id,{file:"looppause.js"});
+    }
 }
