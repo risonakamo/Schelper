@@ -9,3 +9,9 @@
 
 ## SAN SOURCE page open anywhere in current window
 - execute LOOPPAUSE script on all source pages
+
+## PX POST page or BIG IMAGE page anywhere in current window
+- open big image pages for all multi image post pages, in new tabs
+    - single image post pages will expand the big image on the page itself
+- convert all big image pages into source pages
+    - for a single image post page that has the big image expanded, opens the source image in a new tab
