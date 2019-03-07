@@ -259,6 +259,11 @@ function setupPxActions()
         e.preventDefault();
         openPxImages();
     });
+
+    document.querySelector(".px-open-source").addEventListener("click",(e)=>{
+        e.preventDefault();
+        openPxSource();
+    });
 }
 
 //open in new tabs big version images from PX post pages.
@@ -282,5 +287,21 @@ function openPxImages(openSource=0)
                 });
             });
         });
+    });
+}
+
+//navigates all open big version image cache pages to their source images,
+//and attempts to navigate singular images to source images in new tabs, if the
+//big image cache is open on singular image pages
+function openPxSource()
+{
+    chrome.tabs.query({
+        currentWindow:true,
+        url:["https://www.pixiv.net/member_illust.php?mode=manga_big*","https://www.pixiv.net/member_illust.php?mode=medium*"]
+    },(tabs)=>{
+        for (var x=0,l=tabs.length;x<l;x++)
+        {
+            chrome.tabs.executeScript(tabs[x].id,{file:"pxopensource.js"});
+        }
     });
 }

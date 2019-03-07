@@ -8,6 +8,6 @@
 
     else
     {
-        window.open(document.querySelector(".gbivnf img").src);
+        window.open(document.querySelector(".gbivnf img").src,"_blank");
     }
 })();
