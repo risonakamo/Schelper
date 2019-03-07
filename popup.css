@@ -2,6 +2,7 @@
 
 body
 {
+    min-width: 318px;
     font-size: 0;
     font-family: Meiryo,"Hiragino Kaku Gothic Pro W3",Arial,"Helvetica Neue",sans-serif;
     margin: 0;

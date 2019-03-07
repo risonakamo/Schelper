@@ -234,6 +234,7 @@ function checkSourceTabs()
         if (_sourceTabs.length)
         {
             document.querySelector(".source-actions").classList.remove("inactive");
+            document.querySelector(".sankaku-inactive").classList.add("inactive");
             document.querySelector(".loop-pause").addEventListener("click",(e)=>{
                 e.preventDefault();
                 loopPauseSourcePages();
@@ -255,14 +256,32 @@ function loopPauseSourcePages()
 //setup actions for px related functions
 function setupPxActions()
 {
-    document.querySelector(".px-open-cache").addEventListener("click",(e)=>{
-        e.preventDefault();
-        openPxImages();
-    });
+    //check various urls to determine if buttons should be enabled
+    chrome.tabs.query({
+        currentWindow:true,
+        url:["https://www.pixiv.net/member_illust.php?mode=medium*","https://www.pixiv.net/member_illust.php?mode=manga_big*"]
+    },(tabs)=>{
+        //check if there are any post pages, enabled both buttons
+        if (tabs.length)
+        {
+            var openBigImagesButton=document.querySelector(".px-open-cache");
+            var openSourceButton=document.querySelector(".px-open-source");
 
-    document.querySelector(".px-open-source").addEventListener("click",(e)=>{
-        e.preventDefault();
-        openPxSource();
+            openBigImagesButton.classList.remove("inactive");
+            openSourceButton.classList.remove("inactive");
+            document.querySelector(".px-actions").classList.remove("inactive");
+            document.querySelector(".sankaku-inactive").classList.add("inactive");
+
+            openBigImagesButton.addEventListener("click",(e)=>{
+                e.preventDefault();
+                openPxImages();
+            });
+
+            openSourceButton.addEventListener("click",(e)=>{
+                e.preventDefault();
+                openPxSource();
+            });
+        }
     });
 }
 
