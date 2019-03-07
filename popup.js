@@ -271,7 +271,6 @@ function openPxCache()
         for (var x=0,l=tabs.length;x<l;x++)
         {
             chrome.tabs.executeScript(tabs[x].id,{file:"pxcacheopen.js"},(res)=>{
-                console.log(res[0]);
                 res=res[0];
 
                 for (var x=0,l=res.length;x<l;x++)
