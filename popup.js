@@ -61,6 +61,7 @@ function main()
     dropZoneActions();
     setupOpenFolderAll();
     checkSourceTabs();
+    setupPxActions();
 }
 
 //async handling of tab script results, so they can be sorted in the correct order
@@ -249,4 +250,35 @@ function loopPauseSourcePages()
     {
         chrome.tabs.executeScript(_sourceTabs[x].id,{file:"looppause.js"});
     }
+}
+
+//setup actions for px related functions
+function setupPxActions()
+{
+    document.querySelector(".px-open-cache").addEventListener("click",(e)=>{
+        e.preventDefault();
+        openPxCache();
+    });
+}
+
+//open in new tabs big version images from PX post pages
+function openPxCache()
+{
+    chrome.tabs.query({
+        currentWindow:true,
+        url:"https://www.pixiv.net/member_illust.php?mode=medium*"
+    },(tabs)=>{
+        for (var x=0,l=tabs.length;x<l;x++)
+        {
+            chrome.tabs.executeScript(tabs[x].id,{file:"pxcacheopen.js"},(res)=>{
+                console.log(res[0]);
+                res=res[0];
+
+                for (var x=0,l=res.length;x<l;x++)
+                {
+                    chrome.tabs.create({url:res[x],active:false});
+                }
+            });
+        }
+    });
 }
