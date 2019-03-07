@@ -4,7 +4,7 @@
   returned.
 
   if the variable openSource is true in the context, needs to be set by executeScript,
-  the returned array will contain source image urls instead*/
+  the returned array will contain source image urls instead, but this doesnt actually work.*/
 (()=>{
     var postId=parseInt(window.location.href.match(/illust_id=(\d+)/)[1]);
     var imageCount=document.querySelector(".fxJxdG"); //select the image count
