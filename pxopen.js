@@ -14,6 +14,12 @@
     {
         imageCount=parseInt(imageCount.innerText.match(/\/(\d+)/)[1]);
 
+        //if set to open source images instead, divert to opensourceimgs function
+        if (openSource)
+        {
+            return openSourceImgs(postId,imageCount);
+        }
+
         var res=[];
         for (var x=0;x<imageCount;x++)
         {
@@ -23,6 +29,11 @@
 
     else
     {
+        if (openSource)
+        {
+            return openSourceImgs(postId);
+        }
+
         //select the image itself and click it, which opens up
         //the larger version of the image to cache it:
         document.querySelector(".gEgPvm").click();
@@ -31,3 +42,21 @@
 
     return res;
 })();
+
+//give post id and number of images, returns array of src image urls to open in new tab
+//from executeScript that should be calling this script
+function openSourceImgs(postId,imageCount=1)
+{
+    var res=[];
+    //get the slash ID and image extension
+    var imageSlashId=document.querySelector(".eaPhLD").src.match(/img\/(.*)\/\d+_.*(\..*)/);
+    var imageExtension=imageSlashId[2];
+    imageSlashId=imageSlashId[1];
+
+    for (var x=0;x<imageCount;x++)
+    {
+        res.push(`https://i.pximg.net/img-original/img/${imageSlashId}/${postId}_p${x}${imageExtension}`);
+    }
+
+    return res;
+}
