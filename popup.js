@@ -263,6 +263,7 @@ function setupPxActions()
 
 //open in new tabs big version images from PX post pages.
 //give openSource=1 to open source pages instead
+//however, open source pages currently doesnt work. so dont use it
 function openPxImages(openSource=0)
 {
     chrome.tabs.query({
