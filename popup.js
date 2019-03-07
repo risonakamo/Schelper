@@ -257,27 +257,29 @@ function setupPxActions()
 {
     document.querySelector(".px-open-cache").addEventListener("click",(e)=>{
         e.preventDefault();
-        openPxCache();
+        openPxImages();
     });
 }
 
-//open in new tabs big version images from PX post pages
-function openPxCache()
+//open in new tabs big version images from PX post pages.
+//give openSource=1 to open source pages instead
+function openPxImages(openSource=0)
 {
     chrome.tabs.query({
         currentWindow:true,
         url:"https://www.pixiv.net/member_illust.php?mode=medium*"
     },(tabs)=>{
-        for (var x=0,l=tabs.length;x<l;x++)
-        {
-            chrome.tabs.executeScript(tabs[x].id,{file:"pxcacheopen.js"},(res)=>{
-                res=res[0];
+        tabs.forEach((x)=>{
+            chrome.tabs.executeScript(x.id,{code:`var openSource=${openSource}`},()=>{
+                chrome.tabs.executeScript(x.id,{file:"pxopen.js"},(res)=>{
+                    res=res[0];
 
-                for (var x=0,l=res.length;x<l;x++)
-                {
-                    chrome.tabs.create({url:res[x],active:false});
-                }
+                    for (var y=0,ly=res.length;y<ly;y++)
+                    {
+                        chrome.tabs.create({url:res[y],active:false});
+                    }
+                });
             });
-        }
+        });
     });
 }

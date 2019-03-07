@@ -1,7 +1,10 @@
 /*when executed on a px post page, returns an array of urls that correspond to cache
   images of the post page, which should then be opened in new tabs to initate the cache.
   If the post is a singular post, the cache is done in the tab itself, and no urls are
-  returned*/
+  returned.
+
+  if the variable openSource is true in the context, needs to be set by executeScript,
+  the returned array will contain source image urls instead*/
 (()=>{
     var postId=parseInt(window.location.href.match(/illust_id=(\d+)/)[1]);
     var imageCount=document.querySelector(".fxJxdG"); //select the image count
