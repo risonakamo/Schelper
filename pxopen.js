@@ -7,12 +7,25 @@
   the returned array will contain source image urls instead, but this doesnt actually work.*/
 (()=>{
     var postId=parseInt(window.location.href.match(/illust_id=(\d+)/)[1]);
-    var imageCount=document.querySelector(".fxJxdG"); //select the image count
+    var imageCount; //select the image count element
+
+    try
+    {
+        //PX dom classes change randomly, so need a structured selection
+        imageCount=document.querySelector("figure").firstChild.firstChild.firstChild.firstChild;
+    }
+
+    catch
+    {
+        imageCount=null;
+    }
+
+    var imageCountMatch=imageCount.innerText.match(/\/(\d+)/);
 
     //if the post is a multi image post (MGA page)
-    if (imageCount)
+    if (imageCountMatch)
     {
-        imageCount=parseInt(imageCount.innerText.match(/\/(\d+)/)[1]);
+        imageCount=parseInt(imageCountMatch[1]);
 
         //if set to open source images instead, divert to opensourceimgs function
         if (openSource)
@@ -36,7 +49,11 @@
 
         //select the image itself and click it, which opens up
         //the larger version of the image to cache it:
-        document.querySelector(".gEgPvm").click();
+        //it does happen to be the same as the imageCount element from up there,
+        //but this is mainly a coincidence and in the past they were different.
+        //leaving the code seperate for now so it's more clear if i have to change
+        //it again some time.
+        document.querySelector("figure").firstChild.firstChild.firstChild.firstChild.click();
         return [];
     }
 

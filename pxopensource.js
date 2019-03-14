@@ -8,6 +8,6 @@
 
     else
     {
-        window.open(document.querySelector(".gbivnf img").src,"_blank");
+        window.open(document.querySelector("div[role=presentation]").firstChild.firstChild.firstChild.firstChild.src,"_blank");
     }
 })();
