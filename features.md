@@ -15,3 +15,6 @@
     - single image post pages will expand the big image on the page itself
 - convert all big image pages into source pages
     - for a single image post page that has the big image expanded, opens the source image in a new tab
+
+## IMGUR ALBUM page open in current tab
+- open a new tab to igaviewer with the current album opened
