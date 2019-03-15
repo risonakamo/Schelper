@@ -62,6 +62,7 @@ function main()
     setupOpenFolderAll();
     checkSourceTabs();
     setupPxActions();
+    setupImgurActions();
 }
 
 //async handling of tab script results, so they can be sorted in the correct order
@@ -321,6 +322,29 @@ function openPxSource()
         for (var x=0,l=tabs.length;x<l;x++)
         {
             chrome.tabs.executeScript(tabs[x].id,{file:"pxopensource.js"});
+        }
+    });
+}
+
+//initialise imgur related actions
+function setupImgurActions()
+{
+    chrome.tabs.query({
+        currentWindow:true,
+        active:true,
+        url:"https://imgur.com/a/*"
+    },(tab)=>{
+        if (tab.length)
+        {
+            tab=tab[0];
+            var albumId=tab.url.match(/.*\/(.*)/)[1];
+
+            var imgurActions=document.querySelector(".imgur-actions");
+            imgurActions.classList.remove("inactive");
+            imgurActions.querySelector(".link-igaviewer").addEventListener("click",(e)=>{
+                e.preventDefault();
+                chrome.tabs.create({url:`https://risonakamo.github.io/igaviewer/#${albumId}`});
+            });
         }
     });
 }
