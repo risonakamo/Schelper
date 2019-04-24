@@ -3,8 +3,13 @@
 
     if (downloadLink.children.length)
     {
-        return downloadLink.children[1].href;
+        downloadLink=downloadLink.children[1].href;
     }
 
-    return document.querySelector("#img").src;
+    else
+    {
+        downloadLink=document.querySelector("#img").src;
+    }
+
+    window.location.href=downloadLink;
 })()

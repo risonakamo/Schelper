@@ -18,3 +18,6 @@
 
 ## IMGUR ALBUM page open in current tab
 - open a new tab to igaviewer with the current album opened
+
+## EXH image page open in current window
+- for each open image tab, initiate download link or open the image on the page if download link is not available

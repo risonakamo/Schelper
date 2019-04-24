@@ -63,6 +63,7 @@ function main()
     checkSourceTabs();
     setupPxActions();
     setupImgurActions();
+    setupExhActions();
 }
 
 //async handling of tab script results, so they can be sorted in the correct order
@@ -346,5 +347,30 @@ function setupImgurActions()
                 chrome.tabs.create({url:`https://risonakamo.github.io/igaviewer/#${albumId}`});
             });
         }
+    });
+}
+
+//initialise exh related actions
+function setupExhActions()
+{
+    chrome.tabs.query({
+        currentWindow:true,
+        url:"https://exhentai.org/s/*"
+    },(tab)=>{
+        if (!tab.length)
+        {
+            return;
+        }
+
+        var exhActions=document.querySelector(".exh-actions");
+        exhActions.classList.remove("inactive");
+
+        exhActions.querySelector(".open-all-exh").addEventListener("click",(e)=>{
+            e.preventDefault();
+            for (var x=0,l=tab.length;x<l;x++)
+            {
+                chrome.tabs.executeScript(tab[x].id,{file:"exhimglink.js"});
+            }
+        });
     });
 }
