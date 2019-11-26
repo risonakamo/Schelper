@@ -346,6 +346,10 @@ function setupImgurActions()
                 e.preventDefault();
                 chrome.tabs.create({url:`https://risonakamo.github.io/igaviewer/#${albumId}`});
             });
+            imgurActions.querySelector(".link-igaviewer2").addEventListener("click",(e)=>{
+                e.preventDefault();
+                chrome.tabs.create({url:`https://risonakamo.github.io/igaviewer2/#${albumId}`});
+            });
         }
     });
 }
