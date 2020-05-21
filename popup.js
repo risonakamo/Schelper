@@ -394,5 +394,9 @@ function setupNhActions()
 
         var nhActions=document.querySelector(".nh-actions");
         nhActions.classList.remove("inactive");
+
+        chrome.tabs.executeScript(tab[0].id,{file:"nhlinkget.js"},(res)=>{
+            document.querySelector(".nh-actions textarea").value=res[0];
+        });
     });
 }
