@@ -64,6 +64,7 @@ function main()
     setupPxActions();
     setupImgurActions();
     setupExhActions();
+    setupNhActions();
 }
 
 //async handling of tab script results, so they can be sorted in the correct order
@@ -376,5 +377,22 @@ function setupExhActions()
                 chrome.tabs.executeScript(tab[x].id,{file:"exhimglink.js"});
             }
         });
+    });
+}
+
+// initialise nh related actions
+function setupNhActions()
+{
+    chrome.tabs.query({
+        currentWindow:true,
+        url:"https://nhentai.net/g/*"
+    },(tab)=>{
+        if (!tab.length)
+        {
+            return;
+        }
+
+        var nhActions=document.querySelector(".nh-actions");
+        nhActions.classList.remove("inactive");
     });
 }

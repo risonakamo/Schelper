@@ -82,3 +82,15 @@ p
     max-width: 100px;
     max-height: 146px;
 }
+
+.nh-actions .text-contain
+{
+    padding: 0 11px 0 5px;
+}
+
+.nh-actions .text-contain textarea
+{
+    width: 100%;
+    resize: none;
+    height: 100px;
+}
