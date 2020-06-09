@@ -12,12 +12,13 @@ function thumbnailToFullLink(url)
 {
     // match1=gallery id
     // match2=image count
-    var match=url.match(/nhentai\.net\/galleries\/(\d+)\/(\d+)t/);
+    // match3=png or jpg
+    var match=url.match(/nhentai\.net\/galleries\/(\d+)\/(\d+)t\.(\w+)/);
 
     if (!match)
     {
         return "error";
     }
 
-    return `https://i.nhentai.net/galleries/${match[1]}/${match[2]}.jpg`;
+    return `https://i.nhentai.net/galleries/${match[1]}/${match[2]}.${match[3]}`;
 }
